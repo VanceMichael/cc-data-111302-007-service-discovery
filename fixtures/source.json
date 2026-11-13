@@ -1,0 +1,12 @@
+{
+  "interface": "eth0",
+  "ttl": 120,
+  "goodbye": false,
+  "target": "gateway.local",
+  "address": [
+    127,
+    0,
+    0,
+    2
+  ]
+}
