@@ -1,7 +1,90 @@
 import dgram from 'node:dgram';
-export function dnsName(text){return Buffer.concat([...text.split('.').filter(Boolean).map(label=>{const bytes=Buffer.from(label);if(bytes.length>63)throw new Error('名称标签过长');return Buffer.concat([Buffer.from([bytes.length]),bytes]);}),Buffer.from([0])]);}
-function record(name,type,data,ttl,flush=false){const header=Buffer.alloc(10);header.writeUInt16BE(type,0);header.writeUInt16BE(flush?0x8001:1,2);header.writeUInt32BE(ttl,4);header.writeUInt16BE(data.length,8);return Buffer.concat([dnsName(name),header,data]);}
-export function announcement(state){const service='_collect._tcp.local';const instance='station.'+service;const ttl=state.goodbye?0:state.ttl;const srv=Buffer.alloc(6);srv.writeUInt16BE(8080,4);const address6=Buffer.alloc(16);address6[15]=1;const entries=[record(service,12,dnsName(instance),ttl),record(instance,33,Buffer.concat([srv,dnsName(state.target)]),ttl,true),record(instance,16,Buffer.from([5,105,100,61,49,55]),ttl,true),record(state.target,1,Buffer.from(state.address),ttl,true),record(state.target,28,address6,ttl,true)];const header=Buffer.alloc(12);header.writeUInt16BE(0x8400,2);header.writeUInt16BE(entries.length,6);return Buffer.concat([header,...entries]);}
-export function header(packet){if(packet.length<12)throw new Error('DNS头不完整');return {answers:packet.readUInt16BE(6),flags:packet.readUInt16BE(2)};}
-export const compressedName=Buffer.concat([dnsName('gateway.local'),Buffer.from([0xc0,0])]);
-export async function attach(){const socket=dgram.createSocket('udp4');await new Promise(resolve=>socket.bind(0,'127.0.0.1',resolve));return {send:(packet,port)=>new Promise((resolve,reject)=>socket.send(packet,port,'127.0.0.1',error=>error?reject(error):resolve())),close:()=>new Promise(resolve=>socket.close(resolve))};}
+import { buildResponse, srvData, txtData, aData, aaaaData, parseMessage } from './receiver.mjs';
+import { encodeName, TYPES } from './dns.mjs';
+
+export const SERVICE = '_collect._tcp.local';
+export const INSTANCE = `station.${SERVICE}`;
+
+export function dnsName(text) {
+  return encodeName(text);
+}
+
+export function header(packet) {
+  if (packet.length < 12) throw new Error('DNS头不完整');
+  return { answers: packet.readUInt16BE(6), flags: packet.readUInt16BE(2) };
+}
+
+function number(value) {
+  return Number.isFinite(Number(value)) ? Number(value) : undefined;
+}
+
+/**
+ * Build the packet for one emitter. `state` is the source-level default,
+ * `emitter` adds per-interface overrides, and `overrides` come from /emit.
+ * All three levels may carry `records` for replaying arbitrary captures.
+ */
+export function announcement(state = {}, emitter = {}, overrides = {}) {
+  // Precedence: per-emit overrides, then source-level /control values, then
+  // the emitter's own fixture defaults.
+  const merged = { ...emitter, ...state, ...overrides };
+  const ttl = merged.goodbye ? 0 : merged.ttl;
+  const ttlFor = (kind, fallback = ttl) => {
+    const value = merged[`ttl${kind}`];
+    return Number.isFinite(Number(value)) ? Number(value) : fallback;
+  };
+  const service = merged.service ?? SERVICE;
+  const shortInstance = merged.instance ?? 'station';
+  // PTR RDATA and SRV owner must carry the fully qualified instance name;
+  // fixtures may use the short label.
+  const instance = shortInstance.toLowerCase().endsWith(`.${service.toLowerCase()}`)
+    ? shortInstance
+    : `${shortInstance}.${service}`;
+  const target = merged.target ?? 'gateway.local';
+  const port = number(merged.port) ?? 8080;
+  const records = [];
+
+  records.push({ name: service, type: TYPES.PTR, ttl: ttlFor('Ptr', ttl), data: encodeName(instance) });
+  if (merged.srv !== false) records.push({ name: instance, type: TYPES.SRV, ttl: ttlFor('Srv', ttl), flush: true, data: srvData(port, target) });
+  if (merged.txt !== false) {
+    const entries = merged.txt ?? (merged.txtStrings ?? ['id=17']);
+    records.push({ name: instance, type: TYPES.TXT, ttl: ttlFor('Txt', ttl), flush: true, data: txtData(entries) });
+  }
+  const address = merged.a === false ? null : addressText(merged.address, '127.0.0.2');
+  if (address) records.push({ name: target, type: TYPES.A, ttl: ttlFor('A', ttl), flush: true, data: aData(address) });
+  const address6 = merged.aaaa === false ? null : (merged.address6 ?? '::1');
+  if (address6) records.push({ name: target, type: TYPES.AAAA, ttl: ttlFor('Aaaa', ttl), flush: true, data: aaaaData(address6) });
+
+  if (Array.isArray(merged.records)) {
+    // Extra records for replay scenarios; exact malformed bytes belong to
+    // POST /receive, which takes a whole captured packet.
+    for (const extra of merged.records) {
+      records.push({
+        name: extra.name,
+        type: extra.type,
+        ttl: Number.isFinite(extra.ttl) ? extra.ttl : ttl,
+        flush: Boolean(extra.flush),
+        data: extra.data
+      });
+    }
+  }
+  return buildResponse(records);
+}
+
+export function addressText(value, fallback) {
+  if (Array.isArray(value)) return value.join('.');
+  if (typeof value === 'string' && value) return value;
+  return fallback;
+}
+
+export const compressedName = Buffer.concat([encodeName('gateway.local'), Buffer.from([0xc0, 0])]);
+
+export { parseMessage };
+
+export async function attach({ bind = '127.0.0.1' } = {}) {
+  const socket = dgram.createSocket('udp4');
+  await new Promise(resolve => socket.bind(0, bind, resolve));
+  return {
+    send: (packet, port) => new Promise((resolve, reject) => socket.send(packet, port, '127.0.0.1', error => error ? reject(error) : resolve())),
+    close: () => new Promise(resolve => socket.close(resolve))
+  };
+}

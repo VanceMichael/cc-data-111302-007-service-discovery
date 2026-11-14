@@ -1,0 +1,419 @@
+{
+  "version": 1,
+  "savedAt": 0,
+  "clockMode": "replay",
+  "interfaces": [
+    {
+      "id": "wlan0",
+      "name": "wlan0",
+      "address": "10.20.0.1",
+      "firstSeenAt": 0,
+      "lastSeenAt": 0,
+      "packets": 3
+    }
+  ],
+  "instances": [
+    {
+      "serviceType": "_collect._tcp.local",
+      "instanceName": "gateway-01",
+      "interfaceId": "wlan0",
+      "firstSeenAt": 0,
+      "lastSeenAt": 0,
+      "withdrawnAt": null,
+      "withdrawReason": null,
+      "ptr": {
+        "name": "_collect._tcp.local",
+        "nameLower": "_collect._tcp.local",
+        "type": 12,
+        "typeName": "PTR",
+        "class": 1,
+        "cacheFlush": false,
+        "ttl": 120,
+        "data": {
+          "target": "gateway-01._collect._tcp.local"
+        },
+        "capturedAt": 0,
+        "expiresAt": 120000,
+        "firstSeenAt": 0,
+        "lastSeenAt": 0,
+        "refreshCount": 0,
+        "interfaceId": "wlan0",
+        "interfaceName": "wlan0",
+        "packetId": "pkt-000001",
+        "packetDigest": "8daaeb3a55d4b8d79e01ebf1be5bd93fc11f72abf968e76bcea3a1cef9e19cd9",
+        "packetSequence": 2,
+        "section": "answer",
+        "offset": 12,
+        "rdataStart": 43,
+        "rdataEnd": 75
+      },
+      "srv": {
+        "name": "gateway-01._collect._tcp.local",
+        "nameLower": "gateway-01._collect._tcp.local",
+        "type": 33,
+        "typeName": "SRV",
+        "class": 1,
+        "cacheFlush": true,
+        "ttl": 120,
+        "data": {
+          "priority": 0,
+          "weight": 0,
+          "port": 8080,
+          "target": "gateway-01.local"
+        },
+        "capturedAt": 0,
+        "expiresAt": 120000,
+        "firstSeenAt": 0,
+        "lastSeenAt": 0,
+        "refreshCount": 0,
+        "interfaceId": "wlan0",
+        "interfaceName": "wlan0",
+        "packetId": "pkt-000001",
+        "packetDigest": "8daaeb3a55d4b8d79e01ebf1be5bd93fc11f72abf968e76bcea3a1cef9e19cd9",
+        "packetSequence": 2,
+        "section": "answer",
+        "offset": 75,
+        "rdataStart": 117,
+        "rdataEnd": 141
+      },
+      "txt": {
+        "name": "gateway-01._collect._tcp.local",
+        "nameLower": "gateway-01._collect._tcp.local",
+        "type": 16,
+        "typeName": "TXT",
+        "class": 1,
+        "cacheFlush": true,
+        "ttl": 120,
+        "data": {
+          "strings": [
+            {
+              "type": "Buffer",
+              "data": [
+                105,
+                100,
+                61,
+                49,
+                55
+              ]
+            },
+            {
+              "type": "Buffer",
+              "data": [
+                114,
+                111,
+                108,
+                101,
+                61,
+                99,
+                111,
+                108,
+                108,
+                101,
+                99,
+                116,
+                111,
+                114
+              ]
+            }
+          ]
+        },
+        "capturedAt": 0,
+        "expiresAt": 120000,
+        "firstSeenAt": 0,
+        "lastSeenAt": 0,
+        "refreshCount": 0,
+        "interfaceId": "wlan0",
+        "interfaceName": "wlan0",
+        "packetId": "pkt-000001",
+        "packetDigest": "8daaeb3a55d4b8d79e01ebf1be5bd93fc11f72abf968e76bcea3a1cef9e19cd9",
+        "packetSequence": 2,
+        "section": "answer",
+        "offset": 141,
+        "rdataStart": 183,
+        "rdataEnd": 204
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "name": "gateway-01.local",
+      "interfaceId": "wlan0",
+      "firstSeenAt": 0,
+      "lastSeenAt": 0,
+      "addresses": [
+        {
+          "name": "gateway-01.local",
+          "nameLower": "gateway-01.local",
+          "type": 1,
+          "typeName": "A",
+          "class": 1,
+          "cacheFlush": true,
+          "ttl": 120,
+          "data": {
+            "address": "10.20.0.21"
+          },
+          "capturedAt": 0,
+          "expiresAt": 120000,
+          "firstSeenAt": 0,
+          "lastSeenAt": 0,
+          "refreshCount": 0,
+          "interfaceId": "wlan0",
+          "interfaceName": "wlan0",
+          "packetId": "pkt-000001",
+          "packetDigest": "8daaeb3a55d4b8d79e01ebf1be5bd93fc11f72abf968e76bcea3a1cef9e19cd9",
+          "packetSequence": 2,
+          "section": "answer",
+          "offset": 204,
+          "rdataStart": 232,
+          "rdataEnd": 236
+        },
+        {
+          "name": "gateway-01.local",
+          "nameLower": "gateway-01.local",
+          "type": 28,
+          "typeName": "AAAA",
+          "class": 1,
+          "cacheFlush": true,
+          "ttl": 120,
+          "data": {
+            "address": "fe80:0:0:0:0:0:0:21"
+          },
+          "capturedAt": 0,
+          "expiresAt": 120000,
+          "firstSeenAt": 0,
+          "lastSeenAt": 0,
+          "refreshCount": 0,
+          "interfaceId": "wlan0",
+          "interfaceName": "wlan0",
+          "packetId": "pkt-000001",
+          "packetDigest": "8daaeb3a55d4b8d79e01ebf1be5bd93fc11f72abf968e76bcea3a1cef9e19cd9",
+          "packetSequence": 2,
+          "section": "answer",
+          "offset": 236,
+          "rdataStart": 264,
+          "rdataEnd": 280
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 0,
+        "remainingHosts": 0
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 0,
+        "remainingHosts": 0
+      }
+    },
+    {
+      "at": 0,
+      "type": "packet-rejected",
+      "packetId": "pkt-000001",
+      "interfaceId": "wlan0",
+      "detail": {
+        "code": "NAME_LABEL_OUT_OF_BOUNDS",
+        "reason": "名称标签越过边界",
+        "offset": 12
+      }
+    },
+    {
+      "at": 0,
+      "type": "packet-received",
+      "packetId": "pkt-000001",
+      "interfaceId": "wlan0",
+      "detail": {
+        "records": 0,
+        "rejected": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "instance-advertised",
+      "interfaceId": "wlan0",
+      "serviceType": "_collect._tcp.local",
+      "instance": "gateway-01",
+      "detail": {
+        "packetId": "pkt-000001",
+        "service": "_collect._tcp.local"
+      }
+    },
+    {
+      "at": 0,
+      "type": "target-changed",
+      "interfaceId": "wlan0",
+      "serviceType": "_collect._tcp.local",
+      "instance": "gateway-01",
+      "detail": {
+        "previous": null,
+        "next": {
+          "target": "gateway-01.local",
+          "port": 8080
+        },
+        "packetId": "pkt-000001"
+      }
+    },
+    {
+      "at": 0,
+      "type": "txt-changed",
+      "interfaceId": "wlan0",
+      "serviceType": "_collect._tcp.local",
+      "instance": "gateway-01",
+      "detail": {
+        "attributes": {
+          "id": "17",
+          "role": "collector"
+        },
+        "packetId": "pkt-000001"
+      }
+    },
+    {
+      "at": 0,
+      "type": "address-added",
+      "interfaceId": "wlan0",
+      "detail": {
+        "host": "gateway-01.local",
+        "address": "10.20.0.21",
+        "family": "A",
+        "packetId": "pkt-000001"
+      }
+    },
+    {
+      "at": 0,
+      "type": "address-added",
+      "interfaceId": "wlan0",
+      "detail": {
+        "host": "gateway-01.local",
+        "address": "fe80:0:0:0:0:0:0:21",
+        "family": "AAAA",
+        "packetId": "pkt-000001"
+      }
+    },
+    {
+      "at": 0,
+      "type": "packet-received",
+      "packetId": "pkt-000001",
+      "interfaceId": "wlan0",
+      "detail": {
+        "records": 5,
+        "rejected": 0
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 1,
+        "remainingHosts": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 1,
+        "remainingHosts": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 1,
+        "remainingHosts": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 1,
+        "remainingHosts": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "packet-rejected",
+      "packetId": "pkt-000001",
+      "interfaceId": "wlan0",
+      "detail": {
+        "code": "NAME_LABEL_OUT_OF_BOUNDS",
+        "reason": "名称标签越过边界",
+        "offset": 12
+      }
+    },
+    {
+      "at": 0,
+      "type": "packet-received",
+      "packetId": "pkt-000001",
+      "interfaceId": "wlan0",
+      "detail": {
+        "records": 0,
+        "rejected": 1
+      }
+    },
+    {
+      "at": 0,
+      "type": "state-restored",
+      "detail": {
+        "savedAt": 0,
+        "droppedRecords": 0,
+        "remainingInstances": 1,
+        "remainingHosts": 1
+      }
+    }
+  ],
+  "rejects": [
+    {
+      "packetId": "pkt-000001",
+      "packetDigest": "25e8713386ac223c35b5be6c3e08951441b2230138c3e5a6e4ce1e2be3ab5205",
+      "interfaceId": "wlan0",
+      "interfaceName": "wlan0",
+      "source": {
+        "address": null,
+        "port": null
+      },
+      "capturedAt": 0,
+      "scope": "answer",
+      "sectionIndex": 0,
+      "code": "NAME_LABEL_OUT_OF_BOUNDS",
+      "reason": "名称标签越过边界",
+      "offset": 12
+    },
+    {
+      "packetId": "pkt-000001",
+      "packetDigest": "25e8713386ac223c35b5be6c3e08951441b2230138c3e5a6e4ce1e2be3ab5205",
+      "interfaceId": "wlan0",
+      "interfaceName": "wlan0",
+      "source": {
+        "address": null,
+        "port": null
+      },
+      "capturedAt": 0,
+      "scope": "answer",
+      "sectionIndex": 0,
+      "code": "NAME_LABEL_OUT_OF_BOUNDS",
+      "reason": "名称标签越过边界",
+      "offset": 12
+    }
+  ]
+}

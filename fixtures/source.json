@@ -1,12 +1,58 @@
 {
-  "interface": "eth0",
-  "ttl": 120,
-  "goodbye": false,
-  "target": "gateway.local",
-  "address": [
-    127,
-    0,
-    0,
-    2
+  "clock": {
+    "mode": "replay",
+    "start": 0
+  },
+  "emitters": [
+    {
+      "id": "hall-a",
+      "source": "127.0.0.1",
+      "interface": {
+        "id": "wlan0",
+        "name": "wlan0",
+        "address": "10.20.0.1"
+      },
+      "service": "_collect._tcp.local",
+      "instance": "gateway-01",
+      "target": "gateway-01.local",
+      "port": 8080,
+      "ttl": 120,
+      "address": [
+        10,
+        20,
+        0,
+        21
+      ],
+      "address6": "fe80::21",
+      "txt": [
+        "id=17",
+        "role=collector"
+      ]
+    },
+    {
+      "id": "hall-b",
+      "source": "127.0.0.2",
+      "interface": {
+        "id": "eth0",
+        "name": "eth0",
+        "address": "10.20.1.1"
+      },
+      "service": "_collect._tcp.local",
+      "instance": "gateway-01",
+      "target": "gateway-01.local",
+      "port": 8080,
+      "ttl": 120,
+      "address": [
+        10,
+        20,
+        1,
+        21
+      ],
+      "address6": "fe80::21",
+      "txt": [
+        "id=17",
+        "role=collector"
+      ]
+    }
   ]
 }

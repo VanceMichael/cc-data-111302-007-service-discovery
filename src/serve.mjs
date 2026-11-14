@@ -1,2 +1,3 @@
 import {createSource} from './source.mjs';
-const source=await createSource({port:Number(process.env.PORT??0),host:process.env.HOST??'127.0.0.1'});console.log(JSON.stringify({source:source.url,status:'来源服务就绪'}));let stopping=false;async function stop(){if(stopping)return;stopping=true;await source.close();process.exit(0);}process.on('SIGTERM',stop);process.on('SIGINT',stop);
+const source=await createSource({port:Number(process.env.PORT??0),host:process.env.HOST??'127.0.0.1',statePath:process.env.STATE_PATH||undefined,clockMode:process.env.CLOCK||undefined});
+console.log(JSON.stringify({source:source.url,receiver:source.receiver?`udp://127.0.0.1:${source.receiver.port}`:null,directory:source.url+'/directory',clock:source.clock.real?'real':'replay',status:'来源服务就绪'}));let stopping=false;async function stop(){if(stopping)return;stopping=true;await source.close();process.exit(0);}process.on('SIGTERM',stop);process.on('SIGINT',stop);
